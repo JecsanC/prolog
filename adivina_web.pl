@@ -3,7 +3,7 @@
 :- use_module(library(http/http_parameters)).
 :- use_module(library(http/html_write)).
 :- use_module(library(http/http_session)).
-:- use_module(library(http/http_files)). % ¡Asegúrate de que esta línea esté presente!
+:- use_module(library(http/http_files)). 
 
 :- dynamic conocido/2.
 
@@ -63,7 +63,7 @@ inicio_handler(_Request) :-
                 '    line-height: 1;',
                 '}'
             ]),
-            h1(' Bienvenido al juego ¿Y Este Quien Es?'),
+            h1(' Bienvenido al juego Y Este Quien Es?'),
             p('Haz clic en comenzar para iniciar.'),
             div([], a([href='/jugar', class='button'], ['Comenzar', span([class='material-symbols-outlined'], 'rocket')]))
         ]
@@ -84,13 +84,10 @@ jugar_web(YaPreguntado, Personajes, RespuestaHTML) :-
     Estilos = style([
         'body { background-color: #1a1a2e; color: #f0f0f0; font-family: "Press Start 2P", monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }',
         'h2 { font-size: 20px; color: #00ffcc; text-shadow: 2px 2px #000; margin-bottom: 20px; }',
-        % Estilo general para enlaces (botones de volver a jugar, etc.)
         'a { background-color: #ff0066; color: white; padding: 10px 20px; text-decoration: none; font-size: 12px; border-radius: 8px; border: 2px solid white; box-shadow: 2px 2px #000; display: inline-block; margin-top: 20px; }',
         'a:hover { background-color: #ff3385; }',
-        % Estilo para los botones de Sí/No
         'input[type=submit] { background-color: #00ccff; color: black; font-size: 12px; padding: 10px 20px; border: none; border-radius: 8px; box-shadow: 2px 2px #000; margin: 10px; cursor: pointer; font-family: "Press Start 2P", monospace; }',
         'input[type=submit]:hover { background-color: #33ddff; }',
-        % Estilo para la imagen del personaje (¡NUEVO!)
         'img.personaje-img { max-width: 300px; height: auto; border: 4px solid #00ffcc; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 255, 204, 0.7); margin-bottom: 30px; }'
     ]),
     (
@@ -102,7 +99,7 @@ jugar_web(YaPreguntado, Personajes, RespuestaHTML) :-
         ),
         RespuestaHTML = reply_html_page(title('¡Adiviné!'),
             [ Estilos,
-              h2(['¡Tu personaje es: ', Unico, '!']),
+              h2(['Tu personaje es: ', Unico, '!']),
               ImagenHTML, % Se inserta la imagen aquí
               a([href='/'], ' Jugar de nuevo')
             ])
@@ -117,7 +114,7 @@ jugar_web(YaPreguntado, Personajes, RespuestaHTML) :-
         http_session_assert(pregunta_actual(Pregunta)),
         RespuestaHTML = reply_html_page(title('Pregunta'),
             [ Estilos,
-              h2(['¿El personaje tiene: ', Pregunta, '?']),
+              h2(['El personaje tiene: ', Pregunta, '?']),
               form([action='/responder', method='POST'], [
                   input([type=submit, name=respuesta, value='s']),
                   input([type=submit, name=respuesta, value='n'])
